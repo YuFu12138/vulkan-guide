@@ -385,11 +385,10 @@ void VulkanEngine::init_background_pipelines()
     backgroundEffects.push_back(gradient);
     backgroundEffects.push_back(sky);
 
-    //add the 2 background effects into the array
-    backgroundEffects.push_back(gradient);
-    backgroundEffects.push_back(sky);
-
-    _mainDeletionQueue.push_function([&]() {
+    //destroy structures properly
+    vkDestroyShaderModule(_device, gradientShader, nullptr);
+    vkDestroyShaderModule(_device, skyShader, nullptr);
+    _mainDeletionQueue.push_function([=]() {
         vkDestroyPipelineLayout(_device, _gradientPipelineLayout, nullptr);
         vkDestroyPipeline(_device, sky.pipeline, nullptr);
         vkDestroyPipeline(_device, gradient.pipeline, nullptr);
