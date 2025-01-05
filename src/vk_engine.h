@@ -33,6 +33,22 @@ struct FrameData {
 	DeletionQueue _deletionQueue;
 };
 
+struct ComputePushConstants {
+	glm::vec4 data1;
+	glm::vec4 data2;
+	glm::vec4 data3;
+	glm::vec4 data4;
+};
+
+struct ComputeEffect {
+	const char* name;
+
+	VkPipeline pipeline;
+	VkPipelineLayout layout;
+
+	ComputePushConstants data;
+};
+
 #ifdef NDEBUG
 constexpr bool bUseValidationLayers = false;
 #else
@@ -83,6 +99,8 @@ private:
 	VkFence _immFence;
 	VkCommandBuffer _immCommandBuffer;
 	VkCommandPool _immCommandPool;
+	std::vector<ComputeEffect> backgroundEffects;
+	int currentBackgroundEffect{ 0 };
 
 private:
 	void init_vulkan();
@@ -94,6 +112,7 @@ private:
 	void init_background_pipelines();
 	void init_imgui();
 	void immediate_submit(std::function<void(VkCommandBuffer cmd)>&& function);
+	void draw_imgui(VkCommandBuffer cmd, VkImageView targetImageView);
 
 	void create_swapchain(uint32_t width, uint32_t height);
 	void destroy_swapchain();
