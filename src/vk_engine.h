@@ -101,6 +101,8 @@ private:
 	VkCommandPool _immCommandPool;
 	std::vector<ComputeEffect> backgroundEffects;
 	int currentBackgroundEffect{ 0 };
+	VkPipelineLayout _trianglePipelineLayout;
+	VkPipeline _trianglePipeline;
 
 private:
 	void init_vulkan();
@@ -120,6 +122,8 @@ private:
 	FrameData& get_current_frame() { return _frames[_frameNumber % FRAME_OVERLAP]; };
 
 	void draw_background(VkCommandBuffer cmd);
+	void init_triangle_pipeline();
+	void draw_geometry(VkCommandBuffer cmd);
 
 public:
 	//initializes everything in the engine
