@@ -104,6 +104,11 @@ private:
 	VkPipelineLayout _trianglePipelineLayout;
 	VkPipeline _trianglePipeline;
 
+	VkPipelineLayout _meshPipelineLayout;
+	VkPipeline _meshPipeline;
+
+	GPUMeshBuffers rectangle;
+
 private:
 	void init_vulkan();
 	void init_swapchain();
@@ -125,6 +130,12 @@ private:
 	void init_triangle_pipeline();
 	void draw_geometry(VkCommandBuffer cmd);
 
+	AllocatedBuffer create_buffer(size_t allocSize, VkBufferUsageFlags usage, VmaMemoryUsage memoryUsage);
+	void destroy_buffer(const AllocatedBuffer& buffer);
+	GPUMeshBuffers uploadMesh(std::span<uint32_t> indices, std::span<Vertex> vertices);
+
+	void init_mesh_pipeline();
+	void init_default_data();
 public:
 	//initializes everything in the engine
 	void init();
