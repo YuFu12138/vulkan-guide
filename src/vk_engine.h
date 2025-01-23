@@ -6,6 +6,7 @@
 #include <vk_types.h>
 #include <vk_descriptors.h>
 #include <vk_pipelines.h>
+#include <vk_loader.h>
 
 struct DeletionQueue
 {
@@ -88,6 +89,7 @@ private:
 	VmaAllocator _allocator;
 	//draw resources
 	AllocatedImage _drawImage;
+	AllocatedImage _depthImage;
 	VkExtent2D _drawExtent;
 	DescriptorAllocator globalDescriptorAllocator;
 
@@ -108,6 +110,7 @@ private:
 	VkPipeline _meshPipeline;
 
 	GPUMeshBuffers rectangle;
+	std::vector<std::shared_ptr<MeshAsset>> testMeshes;
 
 private:
 	void init_vulkan();
@@ -132,7 +135,6 @@ private:
 
 	AllocatedBuffer create_buffer(size_t allocSize, VkBufferUsageFlags usage, VmaMemoryUsage memoryUsage);
 	void destroy_buffer(const AllocatedBuffer& buffer);
-	GPUMeshBuffers uploadMesh(std::span<uint32_t> indices, std::span<Vertex> vertices);
 
 	void init_mesh_pipeline();
 	void init_default_data();
@@ -148,4 +150,6 @@ public:
 
 	//run main loop
 	void run();
+
+	GPUMeshBuffers uploadMesh(std::span<uint32_t> indices, std::span<Vertex> vertices);
 };
