@@ -67,6 +67,7 @@ private:
 	VkExtent2D _windowExtent{ 1700 , 900 };
 
 	struct SDL_Window* _window{ nullptr };
+	bool resize_requested{ false };
 
 	static VulkanEngine& Get();
 	VkInstance _instance;// Vulkan library handle
@@ -91,6 +92,7 @@ private:
 	AllocatedImage _drawImage;
 	AllocatedImage _depthImage;
 	VkExtent2D _drawExtent;
+	float renderScale = 1.f;
 	DescriptorAllocator globalDescriptorAllocator;
 
 	VkDescriptorSet _drawImageDescriptors;
@@ -138,6 +140,7 @@ private:
 
 	void init_mesh_pipeline();
 	void init_default_data();
+	void resize_swapchain();
 public:
 	//initializes everything in the engine
 	void init();
