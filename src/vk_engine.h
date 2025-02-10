@@ -32,6 +32,7 @@ struct FrameData {
 	VkSemaphore _swapchainSemaphore, _renderSemaphore;
 	VkFence _renderFence;
 	DeletionQueue _deletionQueue;
+	DescriptorAllocatorGrowable _frameDescriptors;
 };
 
 struct ComputePushConstants {
@@ -48,6 +49,15 @@ struct ComputeEffect {
 	VkPipelineLayout layout;
 
 	ComputePushConstants data;
+};
+
+struct GPUSceneData {
+	glm::mat4 view;
+	glm::mat4 proj;
+	glm::mat4 viewproj;
+	glm::vec4 ambientColor;
+	glm::vec4 sunlightDirection; // w for sun power
+	glm::vec4 sunlightColor;
 };
 
 #ifdef NDEBUG
@@ -113,6 +123,9 @@ private:
 
 	GPUMeshBuffers rectangle;
 	std::vector<std::shared_ptr<MeshAsset>> testMeshes;
+
+	GPUSceneData sceneData;
+	VkDescriptorSetLayout _gpuSceneDataDescriptorLayout;
 
 private:
 	void init_vulkan();
