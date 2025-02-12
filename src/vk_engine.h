@@ -133,7 +133,7 @@ public:
 	AllocatedImage _depthImage;
 	VkExtent2D _drawExtent;
 	float renderScale = 1.f;
-	DescriptorAllocator globalDescriptorAllocator;
+	DescriptorAllocatorGrowable globalDescriptorAllocator;
 
 	VkDescriptorSet _drawImageDescriptors;
 	VkDescriptorSetLayout _drawImageDescriptorLayout;
@@ -166,6 +166,9 @@ public:
 	VkSampler _defaultSamplerNearest;
 
 	VkDescriptorSetLayout _singleImageDescriptorLayout;
+
+	MaterialInstance defaultData;
+	GLTFMetallic_Roughness metalRoughMaterial;
 
 private:
 	void init_vulkan();
