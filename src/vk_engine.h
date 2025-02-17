@@ -7,6 +7,7 @@
 #include <vk_descriptors.h>
 #include <vk_pipelines.h>
 #include <vk_loader.h>
+#include <camera.h>
 
 struct DeletionQueue
 {
@@ -193,7 +194,7 @@ public:
 	GLTFMetallic_Roughness metalRoughMaterial;
 	DrawContext mainDrawContext;
 	std::unordered_map<std::string, std::shared_ptr<Node>> loadedNodes;
-
+	Camera mainCamera;
 private:
 	void init_vulkan();
 	void init_swapchain();
