@@ -48,7 +48,7 @@ struct LoadedGLTF : public IRenderable {
 
 private:
 
-    void clearAll() {};
+    void clearAll();
 };
 
 //forward declaration
