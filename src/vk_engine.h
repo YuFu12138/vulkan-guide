@@ -195,6 +195,7 @@ public:
 	DrawContext mainDrawContext;
 	std::unordered_map<std::string, std::shared_ptr<Node>> loadedNodes;
 	Camera mainCamera;
+	std::unordered_map<std::string, std::shared_ptr<LoadedGLTF>> loadedScenes;
 private:
 	void init_vulkan();
 	void init_swapchain();
@@ -215,10 +216,10 @@ private:
 	void draw_background(VkCommandBuffer cmd);
 	void init_triangle_pipeline();
 	void draw_geometry(VkCommandBuffer cmd);
-
+public:
 	AllocatedBuffer create_buffer(size_t allocSize, VkBufferUsageFlags usage, VmaMemoryUsage memoryUsage);
 	void destroy_buffer(const AllocatedBuffer& buffer);
-
+private:
 	void init_mesh_pipeline();
 	void init_default_data();
 	void resize_swapchain();

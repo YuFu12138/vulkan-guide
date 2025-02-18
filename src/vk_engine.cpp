@@ -179,10 +179,17 @@ void VulkanEngine::init()
     init_default_data();
 
     mainCamera.velocity = glm::vec3(0.f);
-    mainCamera.position = glm::vec3(0, 0, 5);
+    mainCamera.position = glm::vec3(30.f, -00.f, -085.f);
 
     mainCamera.pitch = 0;
     mainCamera.yaw = 0;
+
+    std::string structurePath = { "..\\..\\assets\\structure.glb" };
+    auto structureFile = loadGltf(this, structurePath);
+
+    assert(structureFile.has_value());
+
+    loadedScenes["structure"] = *structureFile;
 
     // everything went fine
     _isInitialized = true;
@@ -797,7 +804,9 @@ void VulkanEngine::update_scene()
 {
     mainDrawContext.OpaqueSurfaces.clear();
 
-    loadedNodes["Suzanne"]->Draw(glm::mat4{ 1.f }, mainDrawContext);
+    loadedScenes["structure"]->Draw(glm::mat4{ 1.f }, mainDrawContext);
+
+    /*loadedNodes["Suzanne"]->Draw(glm::mat4{ 1.f }, mainDrawContext);
 
     for (int x = -3; x < 3; x++) {
 
@@ -805,7 +814,7 @@ void VulkanEngine::update_scene()
         glm::mat4 translation = glm::translate(glm::vec3{ x, 1, 0 });
 
         loadedNodes["Cube"]->Draw(translation * scale, mainDrawContext);
-    }
+    }*/
 
     mainCamera.update();
 
@@ -1195,6 +1204,8 @@ void VulkanEngine::cleanup()
     if (_isInitialized) {
         //make sure the gpu has stopped doing its things
         vkDeviceWaitIdle(_device);
+
+        loadedScenes.clear();
 
         for (int i = 0; i < FRAME_OVERLAP; i++) {
 
