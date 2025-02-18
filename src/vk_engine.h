@@ -104,6 +104,7 @@ struct RenderObject {
 	VkBuffer indexBuffer;
 
 	MaterialInstance* material;
+	Bounds bounds;
 
 	glm::mat4 transform;
 	VkDeviceAddress vertexBufferAddress;
@@ -112,6 +113,14 @@ struct RenderObject {
 struct DrawContext {
 	std::vector<RenderObject> OpaqueSurfaces;
 	std::vector<RenderObject> TransparentSurfaces;
+};
+
+struct EngineStats {
+	float frametime;
+	int triangle_count;
+	int drawcall_count;
+	float scene_update_time;
+	float mesh_draw_time;
 };
 
 #ifdef NDEBUG
@@ -197,6 +206,7 @@ public:
 	std::unordered_map<std::string, std::shared_ptr<Node>> loadedNodes;
 	Camera mainCamera;
 	std::unordered_map<std::string, std::shared_ptr<LoadedGLTF>> loadedScenes;
+	EngineStats stats;
 private:
 	void init_vulkan();
 	void init_swapchain();
